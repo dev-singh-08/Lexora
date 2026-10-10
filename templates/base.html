@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | NyayaGPT</title>
+    
+    <!-- Professional Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --white: #ffffff;
+            --gray-100: #ececec;
+            --gray-200: #c7c7c6;
+            --gray-300: #b4b4b3;
+            --gray-400: #a1a1a0;
+            --gray-500: #8e8e8d;
+            --gray-600: #7b7b7a;
+            --gray-700: #565654;
+            --gray-800: #30302e;
+            --gray-900: #1d1d1b;
+            
+            --primary: var(--gray-900);
+            --secondary: var(--gray-800);
+            --accent: var(--gray-600);
+            --bg-light: var(--white);
+            --bg-muted: var(--gray-100);
+            --border: var(--gray-200);
+            --text-main: var(--gray-900);
+            --text-muted: var(--gray-600);
+            
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-serif: 'Lora', serif;
+            --font-display: 'Playfair Display', serif;
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            background: var(--bg-light);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        p, div, span, label {
+            font-family: var(--font-sans);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        main {
+            min-height: calc(100vh - 80px); /* Adjust based on header height */
+        }
+
+        /* Common Transitions */
+        .btn, .card, nav a, input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block js %}{% endblock %}
+</body>
+</html>

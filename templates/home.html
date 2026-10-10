@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+    
+    {% block title %}
+    NyayaGPT - Legal AI Assistant
+    {% endblock  %}
+
+    {% block css %}
+<style>
+    header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container h1 { 
+      font-size: 1.5rem;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none; 
+      color: var(--text-muted); 
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover, nav a.active { 
+      color: var(--primary); 
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 6rem 0;
+    }
+
+    .hero-text {
+      text-align: left;
+    }
+
+    .hero-text h2 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .hero-text p { 
+      font-size: 1.1rem; 
+      margin-bottom: 2.5rem; 
+      color: var(--gray-700);
+      font-family: var(--font-serif);
+      max-width: 90%;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem; 
+      border: 1px solid var(--primary); 
+      border-radius: 0;
+      background: var(--primary);
+      color: var(--white); 
+      cursor: pointer; 
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn:hover { 
+      background: transparent;
+      color: var(--primary);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .hero-image-container {
+      position: relative;
+    }
+
+    .hero img { 
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter 0.5s ease;
+    }
+    
+    .hero img:hover {
+        filter: grayscale(0%);
+    }
+
+    .hero-image-container::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: -20px;
+      bottom: -20px;
+      border: 1px solid var(--border);
+      z-index: -1;
+    }
+
+    .features {
+      padding: 8rem 0;
+      background: var(--bg-muted);
+    }
+
+    .features-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .features h3 { 
+      font-size: 2.5rem; 
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .features-header p {
+        color: var(--text-muted);
+        font-family: var(--font-serif);
+    }
+
+    .feature-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 3rem 2rem; 
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .card h4 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .card:hover {
+      border-color: var(--gray-400);
+      box-shadow: var(--shadow-md);
+    }
+
+    footer {
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 4rem 0;
+        text-align: center;
+      }
+      .hero-text h2 { font-size: 2.5rem; }
+      .hero-text p { margin: 0 auto 2rem; }
+      nav { display: none; }
+    }
+  </style>
+{% endblock %}
+    
+{% block content %}
+<header>
+  <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div class="logo-container">
+      <img src="{{url_for('static',filename='unnamed.jpg')}}" alt="logo" style="width:70px; height:70px; border-radius: 50%; object-fit:cover; filter: grayscale(1); ">
+      <h1>NyayaGPT</h1>
+    </div>
+    <nav>
+      <a href="/" class="active">Overview</a>
+      <a href="/rag">Assistant</a>
+      <a href="/signin">Sign In</a>
+      <a href="/signup">Register</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Advanced Legal Intelligence.</h2>
+      <p>NyayaGPT provides definitive legal guidance powered by state-of-the-art AI. Designed for counsel, built for accuracy.</p>
+      <div class="hero-actions">
+        <a href="/rag" class="btn">Launch Assistant</a>
+        <a href="/signup" class="btn btn-outline">Join Network</a>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <img src="{{ url_for('static', filename='legal-law-justice-court-illustration-graphic-vector.jpg') }}" alt="Justice">
+    </div>
+  </section>
+</div>
+
+<section class="features">
+  <div class="container">
+    <div class="features-header">
+        <h3>Core Competencies</h3>
+        <p>Reliable legal support through expert system integration.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="card">
+        <h4>Accurate Intelligence</h4>
+        <p>Synthesizing legal precedents and statutory documents to provide validated, grounded answers.</p>
+      </div>
+      <div class="card">
+        <h4>Regulatory Compliance</h4>
+        <p>Real-time updates on legislative shifts and regulatory frameworks in multiple jurisdictions.</p>
+      </div>
+      <div class="card">
+        <h4>Confidential Design</h4>
+        <p>Enterprise-grade encryption ensures all queries and sensitive data remain strictly within your domain.</p>
+      </div>
+      <div class="card">
+        <h4>Empirical Analysis</h4>
+        <p>Deep-learning models trained specifically on the complexities of legal language and structure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2026 NyayaGPT Research. Professional AI for the Legal Fraternity.</p>
+    </div>
+</footer>
+{% endblock %}
+    
+    {% block js %}
+    {% endblock  %}

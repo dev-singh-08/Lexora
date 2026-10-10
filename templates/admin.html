@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block css %}
+<style>
+    header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container h1 { 
+      font-size: 1.5rem;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none; 
+      color: var(--text-muted); 
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover, nav a.active { 
+      color: var(--primary); 
+    }
+
+    .dashboard-container {
+        padding: 4rem 2rem;
+        background: var(--bg-muted);
+        min-height: calc(100vh - 100px);
+    }
+
+    .section-title {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 2rem;
+        border-bottom: 2px solid var(--border);
+        padding-bottom: 0.5rem;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--white);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 4rem;
+    }
+
+    .data-table th, .data-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .data-table th {
+        background-color: var(--gray-100);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        color: var(--gray-700);
+        letter-spacing: 1px;
+    }
+
+    .data-table tr:hover {
+        background-color: var(--gray-100);
+    }
+
+    .data-table td {
+        font-size: 0.95rem;
+        color: var(--gray-800);
+    }
+
+    .empty-message {
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-muted);
+        font-style: italic;
+        background: var(--white);
+        border: 1px dashed var(--border);
+    }
+
+    .message-cell {
+        max-width: 300px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div class="logo-container">
+      <img src="{{url_for('static',filename='unnamed.jpg')}}" alt="logo" style="width:70px; height:70px; border-radius: 50%; object-fit:cover; filter: grayscale(1); ">
+      <h1>NyayaGPT</h1>
+    </div>
+    <nav>
+      <a href="/">Overview</a>
+      <a href="/rag">Assistant</a>
+      <a href="/contact">Contact Us</a>
+      <a href="/history">History</a>
+      <a href="/admin" class="active">Admin Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<div class="dashboard-container">
+    <div class="container">
+        
+        <h2 class="section-title">User Queries (Contact Page)</h2>
+        {% if user_queries %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for query in user_queries %}
+                <tr>
+                    <td style="white-space: nowrap;">{{ query.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ query.name }}</td>
+                    <td>{{ query.email }}</td>
+                    <td>{{ query.subject or '-' }}</td>
+                    <td class="message-cell">{{ query.message }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-message">No user queries found.</div>
+        <br><br>
+        {% endif %}
+
+        <h2 class="section-title">Unanswered RAG Questions</h2>
+        {% if unanswered_questions %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Sector</th>
+                    <th>Question</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in unanswered_questions %}
+                <tr>
+                    <td style="white-space: nowrap;">{{ q.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ q.sector }}</td>
+                    <td class="message-cell">{{ q.question }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-message">No unanswered questions found.</div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

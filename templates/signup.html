@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+    
+    {% block title %}
+    NyayaGPT - Legal AI Assistant
+    {% endblock  %}
+
+    {% block css %}
+<style>
+    body {
+        background: var(--bg-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 450px;
+        background: var(--white);
+        padding: 3rem;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .logo img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        filter: grayscale(1);
+        border: 1px solid var(--border);
+    }
+
+    .name {
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 2rem;
+    }
+
+    .form-field {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-field label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        color: var(--gray-600);
+    }
+
+    .form-field input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        font-size: 0.95rem;
+        outline: none;
+    }
+
+    .form-field input:focus {
+        border-color: var(--primary);
+    }
+
+    .btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    .btn:hover {
+        background: var(--gray-700);
+    }
+
+    .footer-links {
+        margin-top: 2rem;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .footer-links a {
+        color: var(--primary);
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="logo">
+        <img src="{{url_for('static',filename='unnamed.jpg')}}" alt="NyayaGPT Logo">
+    </div>
+    <div class="name">
+        Membership Request
+    </div>
+    <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem; font-family: var(--font-serif);">
+        Applying for the AI Legal Intelligence Network.
+    </p>
+    <form class="p-3" method="post" action="/signup">
+        <div class="form-field">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" placeholder="Legal representative name">
+        </div>
+        <div class="form-field">
+            <label for="email">Professional Email</label>
+            <input type="email" name="email" id="email" placeholder="example@firm.com">
+        </div>
+        <div class="form-field">
+            <label for="pwd">Security Password</label>
+            <input type="password" name="password" id="pwd" placeholder="Choose a secure password">
+        </div>
+        <div class="form-field">
+            <label for="confirm_pwd">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_pwd" placeholder="Re-enter password">
+        </div>
+        <button class="btn">Submit Credential Application</button>
+    </form>
+    <div class="footer-links">
+        Already registered? <a href="/signin">Sign In Here</a>
+    </div>
+</div>
+{% endblock %}
+    
+    {% block js %}
+    {% endblock  %}

@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block css %}
+<style>
+    header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container h1 { 
+      font-size: 1.5rem;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none; 
+      color: var(--text-muted); 
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover, nav a.active { 
+      color: var(--primary); 
+    }
+
+    .contact-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 100px);
+        background: var(--bg-muted);
+        padding: 4rem 2rem;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 600px;
+        background: var(--white);
+        padding: 3rem;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .contact-header h2 {
+        font-family: var(--font-display);
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .contact-header p {
+        color: var(--text-muted);
+        font-family: var(--font-serif);
+    }
+
+    .form-field {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-field label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+        color: var(--gray-600);
+    }
+
+    .form-field input, .form-field textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        font-size: 1rem;
+        outline: none;
+        font-family: var(--font-sans);
+    }
+
+    .form-field input:focus, .form-field textarea:focus {
+        border-color: var(--primary);
+    }
+
+    .form-field textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: var(--gray-700);
+    }
+
+    .flashes {
+        margin-bottom: 1.5rem;
+    }
+
+    .flash {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        font-size: 0.9rem;
+    }
+
+    .flash.success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+
+    .flash.error {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<header>
+  <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div class="logo-container">
+      <img src="{{url_for('static',filename='unnamed.jpg')}}" alt="logo" style="width:70px; height:70px; border-radius: 50%; object-fit:cover; filter: grayscale(1); ">
+      <h1>NyayaGPT</h1>
+    </div>
+    <nav>
+      <a href="/">Overview</a>
+      <a href="/rag">Assistant</a>
+      <a href="/contact" class="active">Contact Us</a>
+      {% if session.get('user_id') %}
+        <a href="/history">History</a>
+        {% if session.get('user_id') and user and user.is_admin %}
+          <a href="/admin">Admin Dashboard</a>
+        {% endif %}
+      {% else %}
+        <a href="/signin">Sign In</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<div class="contact-container">
+    <div class="wrapper">
+        <div class="contact-header">
+            <h2>Get in Touch</h2>
+            <p>Have a question or feedback? We'd love to hear from you.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flashes">
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="post" action="/contact">
+            <div class="form-field">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" placeholder="John Doe" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-field">
+                <label for="subject">Subject (Optional)</label>
+                <input type="text" name="subject" id="subject" placeholder="Inquiry about...">
+            </div>
+            <div class="form-field">
+                <label for="message">Your Message</label>
+                <textarea name="message" id="message" placeholder="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Query</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
